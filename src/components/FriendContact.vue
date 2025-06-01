@@ -1,6 +1,6 @@
 <template>
     <li>
-        <h2>{{ friendName }} {{ isFavorite ? '(Favourite)' : ''}}</h2>
+        <h2>{{ friendName }} {{ friendSurname }} {{ isFavorite ? '(Favourite)' : ''}}</h2>
         <button @click="toggleDetails">{{ detailsAreVisible ? 'Hide' : 'Show' }} Details</button>
         <button @click="toggleFavorite">{{ friendIsFavorite ? 'Unfavorite' : 'Favorite' }} </button>
         <ul v-if="detailsAreVisible">
@@ -21,6 +21,10 @@ export default {
             type: String,
             required: true
         },
+        friendSurname: {
+            type: String,
+            required: true
+        },
         phoneNumber: {
             type: String,
             required: true
@@ -35,10 +39,18 @@ export default {
             default: false
         }
     },
+    emits: {
+        'toggle-favorite': function(id) {
+            if (id) {
+                return true;
+            } else {
+                console.warn('Id is missing!');
+            }
+        }
+    },
     data() {
         return {
             detailsAreVisible: false,
-            // friendIsFavorite: this.isFavorite
         }
     },
     methods: {
